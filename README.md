@@ -150,7 +150,8 @@ El **control** representa la condición de referencia y el **caso** una condici�
 
 *Figura 1. Diagrama biológico del sistema endócrino (elaborado en BioRender) y su relación con los elementos del circuito eléctrico equivalente.*
 
-![Figura 1. Sistema endocrino BioRender](assets/Sistema_Endocrino_Biorender.jpg)
+<img width="720" height="504" alt="image" src="https://github.com/user-attachments/assets/4fbba6eb-d618-4518-b614-00405c272edc" />
+
 
 El diagrama utiliza el eje **hipotálamo–hipófisis–tiroides** únicamente como **ejemplo ilustrativo** para relacionar cada elemento del circuito con un proceso fisiológico; el modelo eléctrico **no** representa este eje en particular ni incluye la retroalimentación fisiológica. La flecha roja con el signo menos ilustra la **retroalimentación negativa** característica de la homeostasis endócrina, análoga (pero no equivalente) al lazo de control con PID diseñado en la práctica.
 
