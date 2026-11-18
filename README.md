@@ -1,8 +1,62 @@
-[![Open in MATLAB Online](https://www.mathworks.com/images/responsive/global/open-in-matlab-online.svg)](https://matlab.mathworks.com/open/github/v1?repo=KevinDarioITT/MSFP4)
+<div align="center">
 
-# Práctica 4 — Modelado y control del sistema endócrino
+# Práctica 4 | Modelado y control del sistema endócrino
 
-> **Nota para el alumno:** confirma el número de práctica del título (aquí se supone la 4) y sustituye todos los marcadores **[COMPLETAR]** antes de entregar.
+**Ingeniería Biomédica · Modelado de Sistemas Fisiológicos**  
+Tecnológico Nacional de México · Instituto Tecnológico de Tijuana
+
+**Circuito RLC · Modelado matemático · Simulink · Control PID · BioRender**
+
+</div>
+
+<a id="vista-principal"></a>
+## Circuito eléctrico equivalente: elemento principal de la práctica
+
+![Circuito equivalente del sistema endócrino con sus componentes](assets/circuito_rlc.png)
+
+El circuito se compone de una fuente de entrada $V_e(t)$, una resistencia $R_1$ y un nodo de salida $V_s(t)$. Desde ese nodo salen dos ramas en paralelo: el capacitor $C$ hacia tierra y la conexión en serie del inductor $L$ y la resistencia $R_2$ hacia tierra. Esta topología permite analizar cómo cambian la amplitud y la dinámica entre el **control** y el **caso**.
+
+| Componente | Control | Caso |
+|:--|--:|--:|
+| $R_1$ | $1\,\mathrm{k}\Omega$ | $1\,\mathrm{k}\Omega$ |
+| $L$ | $100\,\mathrm{mH}$ | $100\,\mathrm{mH}$ |
+| $C$ | $1\,\mu\mathrm{F}$ | $1000\,\mu\mathrm{F}$ |
+| $R_2$ | $100\,\mathrm{k}\Omega$ | $1\,\mathrm{k}\Omega$ |
+
+**Función de transferencia obtenida mediante las leyes de Kirchhoff y Laplace:**
+
+$$
+\boxed{G(s)=\frac{V_s(s)}{V_e(s)}=\frac{Ls+R_2}{CLR_1s^2+(CR_1R_2+L)s+(R_1+R_2)}}
+$$
+
+**Resultados analíticos principales:** el control alcanza aproximadamente $0.990\,\mathrm{V}$ y el caso $0.500\,\mathrm{V}$ ante un escalón unitario; ambos sistemas son estables y sobreamortiguados. El PID utilizado tiene $k_P=400$, $k_I=1200$, $k_D=0.5$ y filtro $N=2000$.
+
+**Acceso directo:** [Circuito](#analogia) · [Cálculos matemáticos](#modelo) · [Control PID](#pid) · [Resultados](#resultados) · [Experimento](#experimental)
+
+---
+
+<a id="biorender-principal"></a>
+## Representación fisiológica | BioRender
+
+![Sistema endócrino diseñado en BioRender con equivalencias eléctricas](assets/biorender_sistema_endocrino.png)
+
+El diagrama ilustra un eje **hipotálamo–hipófisis–tiroides** para relacionar el estímulo $V_e(t)$, el transporte $R_1$, el almacenamiento $C$, la inercia $L$, la respuesta $V_s(t)$ y la disipación $R_2$. Es una **analogía ilustrativa**, no una reproducción cuantitativa de ese eje hormonal. [Abrir el BioRender original en PDF](Sistema%20Endocrino%20Biorender.pdf).
+
+---
+
+## Datos del estudiante
+
+**Nombre:** Kevin Rodriguez Padilla  
+**Número de control:** `22210428`  
+**Correo institucional:** `l22210428@tijuana.tecnm.mx`
+
+**Docente:** Dr. Paul Antonio Valle Trujillo · **Asignatura:** Modelado de Sistemas Fisiológicos
+
+---
+
+## Reporte técnico completo
+
+A continuación se conserva el desarrollo de la práctica: fundamentos fisiológicos, circuito, deducción matemática, simulación, controlador y comparación de resultados.
 
 **Docente:** Dr. Paul Antonio Valle Trujillo  
 **Correo:** paul.valle@tectijuana.edu.mx  
@@ -10,7 +64,7 @@
 **Institución:** Tecnológico Nacional de México / Instituto Tecnológico de Tijuana  
 **Asignatura:** Modelado de Sistemas Fisiológicos  
 **Programa:** Ingeniería Biomédica  
-**Estudiante:** Kevin Dario De La Cruz Bojorquez · 20210777 · l20210777@tijuana.tecnm.mx
+**Estudiante:** Kevin Rodriguez Padilla · Control: `22210428` · Correo: `l22210428@tijuana.tecnm.mx`
 
 **Repositorio de la asignatura:** https://github.com/DrPaulValle/MSF-IBF1020  
 **Sede:** Blvd. Alberto Limón Padilla s/n, Tijuana, C. P. 22454, B. C., México.
@@ -148,7 +202,9 @@ El **control** representa la condición de referencia y el **caso** una condici�
 
 ### Diagrama biológico y su relación con el circuito
 
-*Figura 1 ([`Sistema Endocrino Biorender.pdf`](Sistema%20Endocrino%20Biorender.pdf)). Diagrama biológico del sistema endócrino (elaborado en BioRender) y su relación con los elementos del circuito eléctrico equivalente.*
+![BioRender del sistema endócrino con las etiquetas Ve, R1, C, L, Vs y R2](assets/biorender_sistema_endocrino.png)
+
+*Figura 1. Diagrama biológico elaborado en BioRender. [Ver PDF original](Sistema%20Endocrino%20Biorender.pdf).*
 
 El diagrama utiliza el eje **hipotálamo–hipófisis–tiroides** únicamente como **ejemplo ilustrativo** para relacionar cada elemento del circuito con un proceso fisiológico; el modelo eléctrico **no** representa este eje en particular ni incluye la retroalimentación fisiológica. La flecha roja con el signo menos ilustra la **retroalimentación negativa** característica de la homeostasis endócrina, análoga (pero no equivalente) al lazo de control con PID diseñado en la práctica.
 
@@ -194,7 +250,9 @@ A partir de la descripción funcional, el circuito tiene una **rama principal** 
 
 Debido a la presencia de dos elementos independientes de almacenamiento de energía, $C$ y $L$, el circuito es un sistema dinámico de **segundo orden**.
 
-**[COMPLETAR]** Inserta aquí tu esquema del circuito (por ejemplo, el dibujo del cuaderno de prácticas o una captura de Simscape) con la entrada $V_e(t)$, la salida $V_s(t)$, los elementos, $F_e(t)$, $F_s(t)$, los nodos y la referencia.
+![Circuito eléctrico equivalente RLC con fuente, R1, C, L, R2 y salida Vs](assets/circuito_rlc.png)
+
+*Esquema eléctrico equivalente redibujado para facilitar su lectura. La topología corresponde al modelo descrito en esta práctica.*
 
 ### Variables y parámetros
 
@@ -504,7 +562,7 @@ Una realización común en forma paralela (etapas inversoras en paralelo y un su
 <a id="python"></a>
 ## Reproducción en Python
 
-Como verificación independiente, se implementan en Python (Visual Studio Code) las funciones de transferencia del control y del caso con la biblioteca `control`. El código [`DLaCruz20210777.py`](DLaCruz20210777.py):
+Como verificación independiente, se implementan en Python (Visual Studio Code) las funciones de transferencia del control y del caso con la biblioteca `control`. El código [`Rodriguez22210428.py`](Rodriguez22210428.py):
 
 1. define el escalón unitario en $t\in[0,10]\ \mathrm{s}$;
 2. obtiene las respuestas del control y del caso en lazo abierto;
@@ -536,7 +594,7 @@ Dependencias: `numpy`, `control` y `matplotlib` (`pip install numpy control matp
 <a id="biologico"></a>
 ## Diagrama biológico
 
-Se elabora un diagrama del sistema endócrino que relaciona los elementos del modelo con los procesos fisiológicos. El diagrama se presenta en la sección [Sistema fisiológico](#fisiologico) (Figura 1). Identifica como mínimo: la glándula o fuente de secreción, el estímulo, el transporte de la hormona, el compartimento de almacenamiento, el tejido u órgano diana y la respuesta.
+Se presenta el diagrama del sistema endócrino que relaciona los elementos del modelo con los procesos fisiológicos. El diagrama se muestra al inicio de este README y en la sección [Sistema fisiológico](#fisiologico) (Figura 1). Identifica como mínimo: la glándula o fuente de secreción, el estímulo, el transporte de la hormona, el compartimento de almacenamiento, el tejido u órgano diana y la respuesta.
 
 | Elemento del diagrama | Representación en el modelo | Equivalente eléctrico |
 |---|---|---|
@@ -805,12 +863,16 @@ Archivos del repositorio:
 ├── CasoyControl_Lab.pdf               # Captura del osciloscopio (experimento)
 ├── Controlador.pdf                    # Parámetros del bloque PID Controller
 ├── Cálculo Matemático.pdf             # Desarrollo manuscrito: circuito, ecuaciones y Laplace
-├── DLaCruz20210777.py                 # Implementación en Python
-├── DeLaCruz20210777.mlx               # Cuaderno MATLAB
-├── DeLaCruz20210777.pdf               # Exportación del cuaderno MATLAB
+├── Rodriguez22210428.py                 # Implementación en Python
+├── Rodriguez22210428.mlx               # Cuaderno MATLAB
+├── Rodriguez22210428.pdf               # Exportación del cuaderno MATLAB
 ├── LICENSE                            # Licencia del repositorio
 ├── README.md                          # Reporte de la práctica
 ├── Sistema Endocrino Biorender.pdf    # Diagrama biológico (BioRender)
+├── assets/
+│   ├── biorender_sistema_endocrino.png # BioRender visible en GitHub
+│   ├── circuito_rlc.png               # Circuito visible en GitHub
+│   └── circuito_rlc.svg               # Circuito vectorial editable
 └── system.slx                         # Modelo Simulink (ecuaciones, FT, control, Simscape, PID)
 ```
 
@@ -856,9 +918,9 @@ Archivos del repositorio:
 | Circuito eléctrico propuesto | Sección [Circuito eléctrico equivalente](#analogia) |
 | Desarrollo matemático | Sección [Formulación matemática](#modelo) y [`Cálculo Matemático.pdf`](Cálculo%20Matemático.pdf) |
 | Funciones de transferencia de control y caso | Tabla de la sección [Formulación matemática](#modelo) |
-| MATLAB y Simulink | Cuaderno [`DeLaCruz20210777.mlx`](DeLaCruz20210777.mlx) (exportado en [`DeLaCruz20210777.pdf`](DeLaCruz20210777.pdf)) y modelo [`system.slx`](system.slx) |
+| MATLAB y Simulink | Cuaderno [`Rodriguez22210428.mlx`](Rodriguez22210428.mlx) (exportado en [`Rodriguez22210428.pdf`](Rodriguez22210428.pdf)) y modelo [`system.slx`](system.slx) |
 | Simscape Electrical | Circuito equivalente dentro del modelo de Simulink |
-| Python | Código fuente [`DLaCruz20210777.py`](DLaCruz20210777.py) |
+| Python | Código fuente [`Rodriguez22210428.py`](Rodriguez22210428.py) |
 | Figuras | [`Control_caso_matlab.pdf`](Control_caso_matlab.pdf) y [`CasoyControl_Python.pdf`](CasoyControl_Python.pdf) |
 | Ganancias de la sintonización | Sección [Control en lazo cerrado](#pid) |
 | Cálculo del controlador analógico | Sección [Controlador analógico](#analogico) |
